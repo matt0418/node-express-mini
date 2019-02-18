@@ -42,6 +42,51 @@ server.get('/api/users/:id', (req, res) => {
 
 })
 
+server.post('/api/users', (req, res) => {
+    const {name, bio} = req.body
+    if ( !name || !bio ) {
+        return(
+            res.send({status: 200, message: {error: "Provide bio and name"}})
+        )
+    }
+    db
+        .insert({name, bio})
+        .then(user => {
+            res.status(201).json({ success: true, user })
+        })
+
+        .catch(() => {
+            res.status(500).json({
+                success: false,
+                message: {error: "There was an error while saving user"}
+            })
+        })
+})
+
+server.delete('/api/users/:id', (req, res) => {
+    const id = req.params.id
+    if (!id) {
+        return (
+            res.send({status: 404, message:{error: "User with ID does not exist"}})
+        )
+    }
+    db
+        .remove(id)
+        .then(deleted => {
+            if (id) {
+                res.status(204).end()
+            } else {
+                res.status(404).json({ success: false, message: {error: "The user with the specified ID does not exist"}})
+            }
+        })
+        .catch(() => {
+            res.status(500).json({
+                success: false,
+                message: {error: "The user could not be removed"}
+            })
+        })
+})
+
 
 server.listen(4000, () => {
     console.log(`\n*** Server Running on http://localhost:4000 ***\n`)
