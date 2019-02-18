@@ -1,5 +1,7 @@
 import React from 'react'
 import axios from 'axios'
+import UserInfo from './UserInfo'
+import { withRouter, Route } from 'react-router-dom'
 
 class Users extends React.Component {
     constructor() {
@@ -27,10 +29,7 @@ class Users extends React.Component {
             <div>
                 {this.state.users.map((user, index) => {
                     return(
-                        <div key={index}>
-                            <p>Name: {user.name}</p>
-                            <p>Bio: {user.bio}</p>
-                        </div>
+                        <UserInfo user={user} key={index}/>
                     )
                 })}
             </div>
@@ -38,5 +37,5 @@ class Users extends React.Component {
     }
 }
 
-
-export default Users
+const UsersWithRouter = withRouter(Users)
+export default UsersWithRouter

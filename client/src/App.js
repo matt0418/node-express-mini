@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import Users from './components/Users'
+import UsersWithRouter from './components/Users'
+import UserInfo from './components/UserInfo'
+import { Route } from 'react-router-dom'
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <Users />
+        <UsersWithRouter />
       </div>
     );
   }
